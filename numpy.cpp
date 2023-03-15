@@ -37,6 +37,7 @@ public:
     void set_offset(int offset){this->offset = offset;}
     
     //montador
+    matrix(int n_rows, int n_cols, int offset, int *data): n_rows(n_rows), n_cols(n_cols), stride_rows(n_cols), stride_cols(1), offset(offset), data(data) {} ;
     matrix(int n_rows, int n_cols, int stride_rows, int stride_cols, int offset, int *data): n_rows(n_rows), n_cols(n_cols), stride_rows(stride_rows), stride_cols(stride_cols), offset(offset), data(data) {} ;
     //destrutor
     ~matrix();
@@ -79,8 +80,17 @@ public:
     matrix operator^=(int value);
 };
 
+void print_data(int* data, int len){
+    for(int i = 0; i < len; i++){
+        std::cout << data[i] << " ";
+    }
+    std::cout << std::endl;
+}
+
 matrix::~matrix(){
-    delete[] data;
+    if(data !=NULL)
+        std::cout << "deleting data..." << data[0] << std::endl;
+        delete data;
 }
 
 int matrix::get_element(int i, int j){
@@ -390,10 +400,20 @@ matrix matrix::operator^=(int value){
 }
 
 int main(){
-    matrix A(2, 2, 1, 2, 0, NULL);
-    matrix B(2, 2, 1, 2, 0, NULL);
-    matrix C = A + B;
-    C.print_matrix();
+    int *aa = new int[9];
+    int *bb = new int[9];
+    for(int i = 0; i < 9; i++){
+        aa[i] = i;
+        bb[i] = 9-i;
+    }
+
+    matrix AA(3, 3, 0, aa);
+    std::cout << "A = " << std::endl;
+    matrix BB(3, 3, 0, bb);
+    std::cout << "B = " << std::endl;
+    matrix CC = AA.concatenate(BB, 1);
+    std::cout << "C = A + B = " << std::endl;
+    CC.print_matrix();
     return 0;
 }
 

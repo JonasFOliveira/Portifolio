@@ -6,6 +6,7 @@
   - R
   - SQL
   - C
+  - C++
 
 - Datasets:
   - Housing: Datasets com as informações de residencias nos principais centros metropolitanos da india;
